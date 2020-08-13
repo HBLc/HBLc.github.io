@@ -60,12 +60,49 @@
 
 <h5 id="5、查看-load-出来的镜像"><a href="#5、查看-load-出来的镜像" class="headerlink" title="5、查看 load 出来的镜像"></a>5、查看 <code>load</code> 出来的镜像</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure>
 
-<h5 id="6、如果-load-出来的镜像其名字和版本号均为-none，我们要通过-tag-命令赋予名字和版本号"><a href="#6、如果-load-出来的镜像其名字和版本号均为-none，我们要通过-tag-命令赋予名字和版本号" class="headerlink" title="6、如果 load 出来的镜像其名字和版本号均为 none，我们要通过 tag 命令赋予名字和版本号"></a>6、如果 <code>load</code> 出来的镜像其名字和版本号均为 <code>none</code>，我们要通过 <code>tag</code> 命令赋予名字和版本号</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker tag 镜像ID 镜像名字:版本号</span><br></pre></td></tr></table></figure>]]></content>
+<h5 id="6、如果-load-出来的镜像其名字和版本号均为-none，我们要通过-tag-命令赋予名字和版本号"><a href="#6、如果-load-出来的镜像其名字和版本号均为-none，我们要通过-tag-命令赋予名字和版本号" class="headerlink" title="6、如果 load 出来的镜像其名字和版本号均为 none，我们要通过 tag 命令赋予名字和版本号"></a>6、如果 <code>load</code> 出来的镜像其名字和版本号均为 <code>none</code>，我们要通过 <code>tag</code> 命令赋予名字和版本号</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker tag 镜像ID 镜像名字:版本号</span><br></pre></td></tr></table></figure>
+
+]]></content>
       <categories>
         <category>Java</category>
       </categories>
       <tags>
         <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Navicat Premium 远程连接 sqlserver</title>
+    <url>/2020/05/30/Navicat%20Premium%20%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5%20sqlserver/</url>
+    <content><![CDATA[<h4 id="Navicat-Premium远程连接-sqlserver"><a href="#Navicat-Premium远程连接-sqlserver" class="headerlink" title="Navicat Premium远程连接 sqlserver"></a>Navicat Premium远程连接 sqlserver</h4><p><strong><em>注意，sqlserver配置的时候，主机名或ip地址这一栏，要讲ip地址和端口号都要填上，并且，中间用逗号隔开，逗号！\</em></strong></p>
+<p>配置入下图所示：</p>
+<p><img src="http://fp1.fghrsh.net/2020/05/30/52614bce2772f1ad67ffb35e1df994b1.png" alt=""></p>
+]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>sqlserver</tag>
+        <tag>navicat</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Spring Boot 取接口请求IP</title>
+    <url>/2020/08/13/Spring%20Boot%20%E5%8F%96%E6%8E%A5%E5%8F%A3%E8%AF%B7%E6%B1%82IP/</url>
+    <content><![CDATA[<h4 id="首先我们要取得-HttpServletRequest-HttpServletResponse同理"><a href="#首先我们要取得-HttpServletRequest-HttpServletResponse同理" class="headerlink" title="首先我们要取得 HttpServletRequest (HttpServletResponse同理)"></a>首先我们要取得 HttpServletRequest (HttpServletResponse同理)</h4><p><strong>方式一：通过静态方法获取，也可以封装一个静态方法出来</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HttpContextUtils</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> HttpServletRequest <span class="title">getHttpServletRequest</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>方式二：通过参数直接获取，只要在你的方法上加上参数，SpringBoot 就会帮你绑定，你可以直接使用。如果你的方法有其他参数，把 request 参数加到后面即可</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@GetMapping</span>(<span class="string">"/one"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">methodOne</span><span class="params">(@RequestParam String name, HttpServletRequest request)</span> </span>&#123; &#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>方式三：注入到类，这样就不用每个方法都写了</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> HttpServletRequest request;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">TestController</span><span class="params">(HttpServletRequest request)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">this</span>.request = request;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Log</span>(<span class="string">"执行方法一"</span>)</span><br><span class="line"><span class="meta">@GetMapping</span>(<span class="string">"/one"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">methodOne</span><span class="params">(@RequestParam String name)</span> </span>&#123; &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="拿到-HttpServletRequest-后即可取得请求的-IP-地址"><a href="#拿到-HttpServletRequest-后即可取得请求的-IP-地址" class="headerlink" title="拿到 HttpServletRequest 后即可取得请求的 IP 地址"></a>拿到 HttpServletRequest 后即可取得请求的 IP 地址</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IPUtils</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取IP地址</span></span><br><span class="line"><span class="comment">     * &lt;p&gt;</span></span><br><span class="line"><span class="comment">     * 使用Nginx等反向代理软件， 则不能通过request.getRemoteAddr()获取IP地址</span></span><br><span class="line"><span class="comment">     * 如果使用了多级反向代理的话，X-Forwarded-For的值并不止一个，而是一串IP地址，X-Forwarded-For中第一个非unknown的有效IP字符串，则为真实IP地址</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getIpAddr</span><span class="params">(HttpServletRequest request)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line"></span><br><span class="line">        String ip = request.getHeader(<span class="string">"x-forwarded-for"</span>);</span><br><span class="line">        <span class="keyword">if</span> (ip == <span class="keyword">null</span> || ip.length() == <span class="number">0</span> || <span class="string">"unknown"</span>.equalsIgnoreCase(ip))</span><br><span class="line">        &#123;</span><br><span class="line">            ip = request.getHeader(<span class="string">"Proxy-Client-IP"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (ip == <span class="keyword">null</span> || ip.length() == <span class="number">0</span> || <span class="string">"unknown"</span>.equalsIgnoreCase(ip))</span><br><span class="line">        &#123;</span><br><span class="line">            ip = request.getHeader(<span class="string">"WL-Proxy-Client-IP"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (ip == <span class="keyword">null</span> || ip.length() == <span class="number">0</span> || <span class="string">"unknown"</span>.equalsIgnoreCase(ip))</span><br><span class="line">        &#123;</span><br><span class="line">            ip = request.getRemoteAddr();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"0:0:0:0:0:0:0:1"</span>.equals(ip) ? <span class="string">"127.0.0.1"</span> : ip;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Spring Boot</tag>
       </tags>
   </entry>
   <entry>
@@ -100,21 +137,6 @@
       </categories>
       <tags>
         <tag>Spring</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Navicat Premium 远程连接 sqlserver</title>
-    <url>/2020/05/30/Navicat%20Premium%20%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5%20sqlserver/</url>
-    <content><![CDATA[<h4 id="Navicat-Premium远程连接-sqlserver"><a href="#Navicat-Premium远程连接-sqlserver" class="headerlink" title="Navicat Premium远程连接 sqlserver"></a>Navicat Premium远程连接 sqlserver</h4><p><strong><em>注意，sqlserver配置的时候，主机名或ip地址这一栏，要讲ip地址和端口号都要填上，并且，中间用逗号隔开，逗号！\</em></strong></p>
-<p>配置入下图所示：</p>
-<p><img src="http://fp1.fghrsh.net/2020/05/30/52614bce2772f1ad67ffb35e1df994b1.png" alt=""></p>
-]]></content>
-      <categories>
-        <category>数据库</category>
-      </categories>
-      <tags>
-        <tag>sqlserver</tag>
-        <tag>navicat</tag>
       </tags>
   </entry>
   <entry>
@@ -322,6 +344,64 @@
       </categories>
       <tags>
         <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>扫描二维码后立即通知实现</title>
+    <url>/2020/05/16/%E6%89%AB%E6%8F%8F%E4%BA%8C%E7%BB%B4%E7%A0%81%E5%90%8E%E7%AB%8B%E5%8D%B3%E9%80%9A%E7%9F%A5%E5%AE%9E%E7%8E%B0%20-%20%E5%89%AF%E6%9C%AC/</url>
+    <content><![CDATA[<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>最近在做微信的扫描支付的时候，遇到一个问题：如何在用户扫码支付完成之后，客户端立即得到通知，进行下一步的跳转？</p>
+<h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><p>首先想到的策略是客户端轮循查询订单的状态，根据返回的结果进行跳转</p>
+<p>这个方案有明显的缺点，轮循时间设置短，频繁发送请求，对服务器以及数据库都会产生压力；轮循时间过长，用户等待时间长，体验很差；</p>
+<a id="more"></a>
+
+<p>针对这个问题想到了微信网页版的扫码登录（扫描完成后，立即登录），现研究一下它的原理并实现相同的功能</p>
+<h5 id="微信扫描登录原理"><a href="#微信扫描登录原理" class="headerlink" title="微信扫描登录原理"></a>微信扫描登录原理</h5><p><img src="http://fp1.fghrsh.net/2020/05/16/89f9b5a775febad24c6c27b14d25bbe6.png" alt=""></p>
+<p>可以看到图片中，前端二维码页面发送一个网络请求，但是这个请求并没有立即返回</p>
+<p><img src="http://fp1.fghrsh.net/2020/05/16/ad4e93640e2d98c6f4eaf5dac97c7d52.png" alt=""></p>
+<p>一段时间没有扫描后，后端返回408，前端重新发起一个相同的网络请求，并继续挂起 ( pending ) </p>
+<p>据此猜测大概实现原理如下：</p>
+<ol>
+<li>进入网站后生成一个 ( 比如<code>UUID</code> ) </li>
+<li>跳转到二维码页面 ( 二维码中的链接包含此<code>UUID</code> )</li>
+<li>二维码页面向服务器发起请求，查询二维码是否被扫登录</li>
+<li>服务器收到请求后查询，如果未扫登录，进入等待( <code>wait</code> )，不立即返回</li>
+<li>一旦被扫，立即返回 ( <code>notify</code> )</li>
+<li>页面收到结果，做后续处理</li>
+</ol>
+<h5 id="UUID-缓存"><a href="#UUID-缓存" class="headerlink" title="UUID 缓存"></a><code>UUID</code> 缓存</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> Map&lt;String, ScanPool&gt; cacheMap = <span class="keyword">new</span> ConcurrentHashMap&lt;String, ScanPool&gt;();</span><br></pre></td></tr></table></figure>
+
+<p>一定要使用 <code>ConcurrentHashMap</code> 否则多线程操作会报错 <code>ConcurrentModificationException</code></p>
+<p>单线程中出现该异常的原因是，对一个集合遍历的同时，又对该集合进行了增删的操作</p>
+<p>多线程中更易出现该异常，当你在一个线程中对一数据集合进行遍历，正赶上另外一个线程对该数据集合进行增删操作时便会出现该异常</p>
+<p>缓存还要设置自动清理功能，防止增长过大</p>
+<h5 id="生成二维码"><a href="#生成二维码" class="headerlink" title="生成二维码"></a>生成二维码</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RequestMapping</span>(<span class="string">"/qrcode/&#123;uuid&#125;"</span>)</span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">createQRCode</span><span class="params">(@PathVariable String uuid, HttpServletResponse response)</span> </span>&#123;</span><br><span class="line">    String text = <span class="string">"http://222.186.174.121:41408/login/"</span> + uuid;</span><br><span class="line">    <span class="keyword">int</span> width = <span class="number">300</span>;</span><br><span class="line">    <span class="keyword">int</span> height = <span class="number">300</span>;</span><br><span class="line">    String format = <span class="string">"png"</span>;</span><br><span class="line">    <span class="comment">//将UUID放入缓存</span></span><br><span class="line">    ScanPool pool = <span class="keyword">new</span> ScanPool();</span><br><span class="line">    PoolCache.cacheMap.put(uuid, pool);</span><br><span class="line">    System.out.println(<span class="string">"UUID放入缓存 成功"</span>);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        Map&lt;EncodeHintType, Object&gt; hints = <span class="keyword">new</span> HashMap&lt;EncodeHintType, Object&gt;();</span><br><span class="line">        hints.put(EncodeHintType.CHARACTER_SET, <span class="string">"utf-8"</span>);</span><br><span class="line">        <span class="comment">//hints.put(EncodeHintType.MARGIN, 1);</span></span><br><span class="line">        hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H); <span class="comment">//容错率</span></span><br><span class="line">        BitMatrix bitMatrix = <span class="keyword">new</span> MultiFormatWriter().encode(text, BarcodeFormat.QR_CODE, width, height, hints);</span><br><span class="line">        MatrixToImageWriter.writeToStream(bitMatrix, format, response.getOutputStream());</span><br><span class="line">    &#125; <span class="keyword">catch</span> (WriterException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">"根据UUID生成二维码 成功"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>生成二维码，并将 <code>UUID</code>放入缓存中</p>
+<p>此处需要注意，二维码 <code>url</code> 必须是外网可以访问地址，此处可以使用<a href="https://www.natfrp.org/" target="_blank" rel="noopener">内网穿透工具</a></p>
+<h5 id="验证是否登录"><a href="#验证是否登录" class="headerlink" title="验证是否登录"></a>验证是否登录</h5><p>前端发起请求，验证该二维码是否已被扫登录</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RequestMapping</span>(<span class="string">"/pool"</span>)</span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="function">String <span class="title">pool</span><span class="params">(String uuid)</span> </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"检测["</span> + uuid + <span class="string">"]是否登录"</span>);</span><br><span class="line"></span><br><span class="line">    ScanPool pool = PoolCache.cacheMap.get(uuid);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (pool == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"timeout"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//使用计时器，固定时间后不再等待扫描结果--防止页面访问超时</span></span><br><span class="line">    <span class="keyword">new</span> Thread(<span class="keyword">new</span> ScanCounter(pool)).start();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">boolean</span> scanFlag = pool.getScanStatus();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (scanFlag) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"success"</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"fail"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 获得状态</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">boolean</span> <span class="title">getScanStatus</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (!isScan()) &#123; <span class="comment">//如果还未扫描，则等待</span></span><br><span class="line">            <span class="keyword">this</span>.wait();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (isScan()) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">notifyPool</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.notifyAll();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>新开线程防止页面访问超时</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ScanCounter</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Long timeout = <span class="number">27000L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//传入的对象</span></span><br><span class="line">    <span class="keyword">private</span> ScanPool scanPool;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ScanCounter</span><span class="params">(ScanPool scanPool)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.scanPool = scanPool;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(timeout);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        notifyPool(scanPool);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">notifyPool</span><span class="params">(ScanPool scanPool)</span> </span>&#123;</span><br><span class="line">        scanPool.notifyPool();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://fp1.fghrsh.net/2020/05/16/4887896a032a17e7bc71aad41057b2f7.png" alt=""></p>
+<h5 id="扫码"><a href="#扫码" class="headerlink" title="扫码"></a>扫码</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RequestMapping</span>(<span class="string">"/login/&#123;uuid&#125;"</span>)</span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="function">String <span class="title">login</span><span class="params">(@PathVariable String uuid)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    ScanPool pool = PoolCache.cacheMap.get(uuid);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (pool == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"timeout,scan fail"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    pool.scanSuccess();</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">"扫码完成，登录成功"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">"扫码完成，登录成功"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>扫码成功，设置扫码状态，唤起线程</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">scanSuccess</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        setScan(<span class="keyword">true</span>);</span><br><span class="line">        <span class="keyword">this</span>.notifyAll();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://fp1.fghrsh.net/2020/05/16/caf7b49e3a4f9ca0d1a0dbbaf2b22d8f.png" alt=""></p>
+<p>手机扫码后</p>
+<p><img src="http://fp1.fghrsh.net/2020/05/16/121ba31644b488ebd9b05e49427eee03.png" alt=""></p>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>二维码</tag>
       </tags>
   </entry>
   <entry>
